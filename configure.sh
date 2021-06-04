@@ -23,11 +23,11 @@ then
   sed -i "$((INDEX-1)),$((INDEX+4))d" ~/.bash_profile
 fi
 
-# Remove reference to renamed .def-coulomb-addons configuration, if present.
-if grep -Fq "source .def-coulomb-addons" ~/.bash_profile
+# Remove reference to renamed .coulomb_addons configuration, if present.
+if grep -Fq "source .coulomb_addons" ~/.bash_profile
 then
-  echo "Removing file .def-coulomb-addons from .bash_profile"
-  INDEX=$(grep -n "source .def-coulomb-addons" ~/.bash_profile | cut -d: -f1)
+  echo "Removing file .coulomb_addons from .bash_profile"
+  INDEX=$(grep -n "source .coulomb_addons" ~/.bash_profile | cut -d: -f1)
   sed -i "$((INDEX-1)),$((INDEX+2))d" ~/.bash_profile
 fi
 
