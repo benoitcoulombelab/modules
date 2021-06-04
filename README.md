@@ -25,6 +25,21 @@ cd apps
 git clone https://github.com/benoitcoulombelab/modules.git
 ```
 
+Install maxquant-tools.
+
+```shell
+module load maxquant-tools
+~/projects/def-coulomb/apps/modules/maxquant-tools/install.sh
+```
+
+If your project is not `def-coulomb`, run the `change-project.sh` script.
+
+:memo: *Replace `$project` with the name of your project*
+
+```shell
+~/projects/def-coulomb/apps/modules/maxquant-tools/change-project.sh $project
+```
+
 
 ## Configure
 
@@ -44,7 +59,7 @@ robtools --help
 
 ### Remove configuration
 
-If a user wants to stop using robtools, he can run the configuration script with `clean` argument.
+If a user wants to stop using modules, he can run the configuration script with `clean` argument.
 
 ```shell
 ~/projects/def-coulomb/apps/modules/configure.sh clean
