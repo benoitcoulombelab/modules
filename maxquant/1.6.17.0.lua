@@ -3,28 +3,27 @@ For detailed instructions, go to:
     https://maxquant.net
 
 This module sets the following environment variables:
-    MAXQUANT_BASE: directory containing MaxQuant programs and bash scripts
+    MAXQUANT: directory containing MaxQuant programs and bash scripts
 
 This module loads the following modules and their requirements:
-    - mono/6.12.0.122
-    - python/3.8.2
+    - mono/5.16.0.179
 ]])
 
-whatis("Version: 1.0.1")
+whatis("Version: 1.6.17.0")
 whatis("Keywords: MaxQuant, Utility")
 whatis("URL: https://maxquant.net")
-whatis("Description: MaxQuant is a quantitative proteomics software package designed for analyzing large mass-spectrometric data sets.")
+whatis("Description: MaxQuant is a quantitative proteomics software package designed for analyzing large
+        mass-spectrometric data sets.")
 
-always_load("nixpkgs/16.09")
+always_load("StdEnv/2018")
 always_load("gcc/7.3.0")
 always_load("mono/5.16.0.179")
-always_load("python/3.7.4")
 
-local home = os.getenv("HOME") or ""
-local project = pathJoin(home, "projects/def-coulomb")
-local maxquant_tools = pathJoin(project, "maxquant-tools")
-local maxquant = pathJoin(project, "maxquant")
-prepend_path("PATH", pathJoin(maxquant_tools, "bash"))
-prepend_path("PATH", pathJoin(maxquant_tools, "venv/bin"))
-setenv("MAXQUANT_BASE", maxquant)
-setenv("MAXQUANT_TOOLS", maxquant_tools)
+local module_path = myFileName()
+local module_name = myModuleFullName()
+local module_base = module_path:sub(1,module_path:find(module_name,1,true)-2)
+local apps_base = module_base:gsub("(.*)/(.*)","%1")
+local home = pathJoin(apps_base, module_name)
+setenv("MAXQUANT", home)
+setenv("MAXQUANT_BASE", home)  -- For compatibility with maxquant-tools
+setenv("MAXQUANT_VERSION", myModuleVersion())
