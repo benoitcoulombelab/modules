@@ -18,4 +18,5 @@ FILENAME=MaxQuant-"$MAXQUANT_VERSION".zip
 wget https://datahub-490-pl6.p.genap.ca/apps/maxquant/"$FILENAME"
 unzip "$FILENAME"
 mv MaxQuant/* .
+rmdir MaxQuant
 rm "$FILENAME"
