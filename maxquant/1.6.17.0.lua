@@ -12,8 +12,7 @@ This module loads the following modules and their requirements:
 whatis("Version: 1.6.17.0")
 whatis("Keywords: MaxQuant, Utility")
 whatis("URL: https://maxquant.net")
-whatis("Description: MaxQuant is a quantitative proteomics software package designed for analyzing large
-        mass-spectrometric data sets.")
+whatis("Description: MaxQuant is a quantitative proteomics software package designed for analyzing large mass-spectrometric data sets.")
 
 always_load("StdEnv/2018")
 always_load("gcc/7.3.0")
