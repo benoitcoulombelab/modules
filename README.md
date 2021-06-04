@@ -85,6 +85,25 @@ email-sbatch.sh clean
 ```
 
 
+## Installing software
+
+Most modules have an installation script called `install.sh` that allows to install the required software.
+
+To install maxquant-tools.
+
+```shell
+module load maxquant-tools
+~/projects/def-coulomb/apps/modules/maxquant-tools/install.sh
+```
+
+To install MaxQuant.
+
+```shell
+module load maxquant
+~/projects/def-coulomb/apps/modules/maxquant/install.sh
+```
+
+
 ## Uninstall
 
 Remove the `apps` (if not customized) folder from the project folder.
