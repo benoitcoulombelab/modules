@@ -7,12 +7,13 @@ then
 fi
 
 
-# Download maxquant.
-if [ ! -d "$MAXQUANT" ]
+if [ -d "$MAXQUANT" ]
 then
-  echo "Creating folder $MAXQUANT"
-  mkdir -p "$MAXQUANT"
+  echo "Deleting old folder $MAXQUANT"
+  rm -rf "$MAXQUANT"
 fi
+echo "Installing MaxQuant in folder $MAXQUANT"
+mkdir -p "$MAXQUANT"
 cd "$MAXQUANT" || { echo "Folder $MAXQUANT does not exists"; exit 1; }
 FILENAME=MaxQuant-"$MAXQUANT_VERSION".zip
 wget https://datahub-490-pl6.p.genap.ca/apps/maxquant/"$FILENAME"
