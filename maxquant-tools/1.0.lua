@@ -11,8 +11,7 @@ whatis("Keywords: MaxQuant, Utility")
 whatis("URL: https://github.com/benoitcoulombelab/maxquant-tools")
 whatis("Description: Utilities to run MaxQuant on Compute Canada server.")
 
-always_load("StdEnv/2018")
-always_load("python/3.7.4")
+prereq(atleast("python","3.5.4"))
 
 local module_path = myFileName()
 local module_name = myModuleFullName()

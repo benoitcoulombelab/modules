@@ -17,6 +17,7 @@ whatis("Description: MaxQuant is a quantitative proteomics software package desi
 always_load("StdEnv/2018")
 always_load("gcc/7.3.0")
 always_load("mono/5.16.0.179")
+always_load("python/3.7.4")
 always_load("maxquant-tools/1.0")
 
 local module_path = myFileName()
