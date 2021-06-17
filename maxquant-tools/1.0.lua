@@ -1,9 +1,6 @@
 help([[
 For detailed instructions, go to:
     https://github.com/benoitcoulombelab/maxquant-tools
-
-This module loads the following modules and their requirements:
-    - python/3.7.4
 ]])
 
 whatis("Version: 1.0")
