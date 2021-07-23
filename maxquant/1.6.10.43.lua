@@ -14,7 +14,7 @@ whatis("Keywords: MaxQuant, Utility")
 whatis("URL: https://maxquant.net")
 whatis("Description: MaxQuant is a quantitative proteomics software package designed for analyzing large mass-spectrometric data sets.")
 
-prereq("StdEnv/2018")
+prereq("StdEnv/2018.3")
 depends_on("gcc/7.3.0")
 depends_on("mono/5.16.0.179")
 depends_on("python/3.7.4")
