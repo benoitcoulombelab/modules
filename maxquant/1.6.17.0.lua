@@ -7,6 +7,7 @@ This module sets the following environment variables:
 
 This module loads the following modules and their requirements:
     - mono/5.16.0.179
+    - maxquant-tools/1.0
 ]])
 
 whatis("Version: 1.6.17.0")
