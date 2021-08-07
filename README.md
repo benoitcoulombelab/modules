@@ -53,8 +53,8 @@ source ~/.bash_profile
 Test if configuration worked.
 
 ```shell
-module load robtools
-robtools --help
+module load maxquant
+maxquant --help
 ```
 
 ### Remove configuration
