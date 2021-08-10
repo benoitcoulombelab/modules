@@ -7,7 +7,7 @@ then
 fi
 
 
-if [ -d "$MAXQUANT" ]
+if [ -d "$MAXQUANT_TOOLS" ]
 then
   echo "Deleting old folder $MAXQUANT_TOOLS"
   rm -rf "$MAXQUANT_TOOLS"
