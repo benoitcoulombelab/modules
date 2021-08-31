@@ -9,7 +9,8 @@ fi
 if [ -d "$file" ]
 then
   echo "Adding read permission to files and directories inside $file"
-  chmod -R a+r "$file"
+  find "$file" -type d -exec chmod a+rx {} \;
+  find "$file" -type f -exec chmod a+r {} \;
 elif [ -f "$file" ]
 then
   echo "Adding read permission to file $file"
