@@ -25,6 +25,23 @@ clean_module_dir () {
   mkdir -p "$dir"
 }
 
+get_project_name () {
+  account="def-coulomb" # Defaults to def-coulomb
+  if [ -d "$HOME"/projects ]
+  then
+    script=$(dirname $(readlink -f "$PWD"))
+    for project in "$HOME"/projects/*
+    do
+      project_path=$(readlink -f "$project")
+      if [[ $script == $project_path/* ]]
+      then
+        account=$(basename "$project")
+      fi
+    done
+  fi
+  echo "$account"
+}
+
 fix_python_shebang () {
   venv=$1
   wrapper=$2

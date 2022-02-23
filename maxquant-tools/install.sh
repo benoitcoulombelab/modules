@@ -43,3 +43,8 @@ python3 -m venv "$venv"
 cloned_version=$(git --git-dir="$MAXQUANT_TOOLS"/.git rev-parse --abbrev-ref HEAD)
 "$venv/bin/pip" install git+file://"$MAXQUANT_TOOLS"@"$cloned_version"
 fix_python_shebang "$venv" maxquanttools_python_wrapper.sh "\$MAXQUANT_TOOLS"
+
+# Fix sbatch account in bash folder.
+account=$(get_project_name)
+echo "Changing sbatch account of bash scripts to $account"
+find bash -maxdepth 1 -type f -exec sed -i "s/^#SBATCH --account=.*$/#SBATCH --account=$account/g" {} \;
