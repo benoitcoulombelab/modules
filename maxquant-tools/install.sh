@@ -13,7 +13,7 @@ source ../commons.sh
 version=$1
 validate_module_version "$version" maxquant-tools
 
-# Load maxquant module and requirements.
+# Load module and requirements.
 module purge
 if [ -z "$version" ]
 then
