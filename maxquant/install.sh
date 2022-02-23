@@ -1,19 +1,33 @@
 #!/bin/bash
 
-if [ -z "$MAXQUANT" ]
+# Stop on errors.
+set -e
+
+# cd to script directory
+script_path=$(dirname "$0")
+cd "$script_path" || { echo "Folder $script_path does not exists"; exit 1; }
+
+# Commons functions
+source ../commons.sh
+
+version=$1
+validate_module_version "$version" maxquant
+
+# Load maxquant module and requirements.
+module purge
+if [ -z "$version" ]
 then
-  echo "MAXQUANT environment variable must be defined, please load a 'maxquant' module"
-  exit 1
+  module load StdEnv/2020 maxquant
+elif [[ $version =~ ^1\..* ]]
+then
+  module load StdEnv/2018.3 maxquant/"$version"
+else
+  module load StdEnv/2020 maxquant/"$version"
 fi
 
 
-if [ -d "$MAXQUANT" ]
-then
-  echo "Deleting old folder $MAXQUANT"
-  rm -rf "$MAXQUANT"
-fi
+clean_module_dir "$MAXQUANT"
 echo "Installing MaxQuant in folder $MAXQUANT"
-mkdir -p "$MAXQUANT"
 cd "$MAXQUANT" || { echo "Folder $MAXQUANT does not exists"; exit 1; }
 FILENAME=MaxQuant-"$MAXQUANT_VERSION".zip
 wget https://datahub-490-pl6.p.genap.ca/apps/maxquant/"$FILENAME"

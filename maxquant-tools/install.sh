@@ -1,22 +1,35 @@
 #!/bin/bash
 
-if [ -z "$MAXQUANT_TOOLS" ]
+# Stop on errors.
+set -e
+
+# cd to script directory
+script_path=$(dirname "$0")
+cd "$script_path" || { echo "Folder $script_path does not exists"; exit 1; }
+
+# Commons functions
+source ../commons.sh
+
+version=$1
+validate_module_version "$version" maxquant-tools
+
+# Load maxquant module and requirements.
+module purge
+if [ -z "$version" ]
 then
-  echo "MAXQUANT_TOOLS environment variable must be defined, please load a 'maxquant-tools' module"
-  exit 1
+  module load StdEnv/2020 python/3.8.10 maxquant-tools
+elif [[ $version =~ ^0\..* ]]
+then
+  module load StdEnv/2020 python/3.8.10 maxquant-tools/"$version"
+else
+  module load StdEnv/2020 python/3.8.10 maxquant-tools/"$version"
 fi
 
 
-if [ -d "$MAXQUANT_TOOLS" ]
-then
-  echo "Deleting old folder $MAXQUANT_TOOLS"
-  rm -rf "$MAXQUANT_TOOLS"
-fi
+clean_module_dir "$MAXQUANT_TOOLS"
 echo "Installing maxquant-tools in folder $MAXQUANT_TOOLS"
-mkdir -p "$MAXQUANT_TOOLS"
 cd "$MAXQUANT_TOOLS" || { echo "Folder $MAXQUANT_TOOLS does not exists"; exit 1; }
 git clone https://github.com/benoitcoulombelab/maxquant-tools.git .
-echo "Checking out version $MAXQUANT_TOOLS_VERSION"
 if [ "$MAXQUANT_TOOLS_VERSION" == "1.0" ]
 then
   git checkout master
@@ -25,22 +38,8 @@ else
 fi
 
 # Create python virtual environment.
-VENV="$MAXQUANT_TOOLS"/venv
-echo "Creating python virtual environment at $VENV"
-python3 -m venv "$VENV"
-VERSION=$(git --git-dir="$MAXQUANT_TOOLS"/.git rev-parse --abbrev-ref HEAD)
-echo "Updating python libraries using $VERSION"
-"$VENV"/bin/pip install git+file://"$MAXQUANT_TOOLS"@"$VERSION"
-
-# Fix shebang for python files.
-find "$VENV/bin" -type f -executable -exec sed -i "1 s|^#\!.*$|#!/usr/bin/env maxquanttools_python_wrapper.sh|g" {} \;
-if [ -f "$VENV"/bin/maxquanttools_python_wrapper.sh ]
-then
-  rm "$VENV"/bin/maxquanttools_python_wrapper.sh
-fi
-{
-  echo '#!/bin/bash'
-  echo 'python="$MAXQUANT_TOOLS"/venv/bin/python3'
-  echo 'exec "$python" "$@"'
-} >> "$VENV"/bin/maxquanttools_python_wrapper.sh
-chmod 755 "$VENV"/bin/maxquanttools_python_wrapper.sh
+venv="$MAXQUANT_TOOLS"/venv
+python3 -m venv "$venv"
+cloned_version=$(git --git-dir="$MAXQUANT_TOOLS"/.git rev-parse --abbrev-ref HEAD)
+"$venv/bin/pip" install git+file://"$MAXQUANT_TOOLS"@"$cloned_version"
+fix_python_shebang "$venv" maxquanttools_python_wrapper.sh
