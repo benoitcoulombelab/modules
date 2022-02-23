@@ -14,7 +14,7 @@ install_module () {
   if [ -f "$module_dir"/install.sh ]
   then
     echo "Installing module $module" 1>&2
-    bash "$module_dir"/install.sh "$version" || echo "Failed installing module $module" 1>&2
+    bash "$module_dir"/install.sh "$version" || (echo "Failed installing module $module" 1>&2 && false)
   fi
 }
 export -f install_module
