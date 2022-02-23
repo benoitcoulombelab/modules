@@ -18,9 +18,6 @@ module purge
 if [ -z "$version" ]
 then
   module load StdEnv/2020 python/3.8.10 dart-id
-elif [[ $version =~ ^0\..* ]]
-then
-  module load StdEnv/2020 python/3.8.10 dart-id/"$version"
 else
   module load StdEnv/2020 python/3.8.10 dart-id/"$version"
 fi
