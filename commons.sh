@@ -28,6 +28,7 @@ clean_module_dir () {
 fix_python_shebang () {
   venv=$1
   wrapper=$2
+  module_var=$3
   find "$venv/bin" -type f -executable -exec sed -i "1 s|^#\!.*$|#!/usr/bin/env $wrapper|g" {} \;
   if [ -f "$venv/bin/$wrapper" ]
   then
@@ -35,7 +36,7 @@ fix_python_shebang () {
   fi
   {
     echo "#!/bin/bash"
-    echo "python=\$DART_ID/venv/bin/python3"
+    echo "python=$module_var/venv/bin/python3"
     echo "exec \$python \$@"
   } >> "$venv/bin/$wrapper"
   chmod 755 "$venv/bin/$wrapper"

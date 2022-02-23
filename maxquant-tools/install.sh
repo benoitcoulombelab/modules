@@ -42,4 +42,4 @@ venv="$MAXQUANT_TOOLS"/venv
 python3 -m venv "$venv"
 cloned_version=$(git --git-dir="$MAXQUANT_TOOLS"/.git rev-parse --abbrev-ref HEAD)
 "$venv/bin/pip" install git+file://"$MAXQUANT_TOOLS"@"$cloned_version"
-fix_python_shebang "$venv" maxquanttools_python_wrapper.sh
+fix_python_shebang "$venv" maxquanttools_python_wrapper.sh "\$MAXQUANT_TOOLS"
