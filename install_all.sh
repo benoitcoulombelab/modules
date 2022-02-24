@@ -18,10 +18,10 @@ install_module () {
     local status=$?
     if [ $status -eq 0 ]
     then
-      printf "Installed module %s\n%s\n\n" "$module" "$output"
+      printf "Installed module %s\n%s\n\n\n\n" "$module" "$output"
       true
     else
-      printf "Failed installation of module %s\n%s\n\n" "$module" "$output"
+      printf "Failed installation of module %s\n%s\n\n\n\n" "$module" "$output"
       false
     fi
   fi
