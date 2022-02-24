@@ -31,7 +31,11 @@ cd "$DART_ID" || { echo "Folder $DART_ID does not exists"; exit 1; }
 venv="$DART_ID"/venv
 python3 -m venv "$venv"
 "$venv/bin/pip" install dart-id=="$DART_ID_VERSION"
-fix_python_shebang "$venv" dartid_python_wrapper.sh "\$DART_ID"
+
+# Fix shebang for python files.
+wrapper="$venv/bin/dartid_python_wrapper.sh"
+write_python_shebang_wrapper "$wrapper" "\$DART_ID/venv/bin/python3"
+fix_python_shebang "$venv/bin" $(basename "$wrapper")
 
 # Fix path to system libraries to be loaded.
 setrpaths.sh --path "$DART_ID"

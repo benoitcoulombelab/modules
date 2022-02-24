@@ -43,18 +43,22 @@ get_project_name () {
 }
 
 fix_python_shebang () {
-  venv=$1
-  wrapper=$2
-  module_var=$3
-  find "$venv/bin" -type f -executable -exec sed -i "1 s|^#\!.*$|#!/usr/bin/env $wrapper|g" {} \;
-  if [ -f "$venv/bin/$wrapper" ]
+  local dir=$1
+  local wrapper=$2
+  find "$dir" -type f -executable -not -name "$wrapper" -exec sed -i "1 s|^#\!.*$|#!/usr/bin/env $wrapper|g" {} \;
+}
+
+write_python_shebang_wrapper () {
+  local wrapper=$1
+  local python=$2
+  if [ -f "$wrapper" ]
   then
-    rm "$venv/bin/$wrapper"
+    rm "$wrapper"
   fi
   {
     echo "#!/bin/bash"
-    echo "python=$module_var/venv/bin/python3"
+    echo "python=$python"
     echo "exec \$python \$@"
-  } >> "$venv/bin/$wrapper"
-  chmod 755 "$venv/bin/$wrapper"
+  } >> "$wrapper"
+  chmod 755 "$wrapper"
 }
