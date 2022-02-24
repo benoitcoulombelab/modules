@@ -8,13 +8,22 @@
 #SBATCH --error=install_all-%A.out
 
 install_module () {
-  module=$1
-  module_dir=$(dirname "$module".lua)
-  version=$(basename "$module")
+  local module=$1
+  local module_dir=$(dirname "$module".lua)
+  local version=$(basename "$module")
   if [ -f "$module_dir"/install.sh ]
   then
-    echo "Installing module $module" 1>&2
-    bash "$module_dir"/install.sh "$version" || (echo "Failed installing module $module" 1>&2 && false)
+    local output
+    output=$(bash "$module_dir"/install.sh "$version")
+    local status=$?
+    if [ $status -eq 0 ]
+    then
+      printf "Installed module %s\n%s\n\n" "$module" "$output"
+      true
+    else
+      printf "Failed installation of module %s\n%s\n\n" "$module" "$output"
+      false
+    fi
   fi
 }
 export -f install_module
