@@ -1,8 +1,8 @@
 #!/bin/bash
 
 validate_module_version () {
-  version=$1
-  name=$2
+  local version=$1
+  local name=$2
   if [ -z "$version" ] && [ ! -f .modulerc.lua ]
   then
     echo "Version of $name module to install is required"
@@ -16,7 +16,7 @@ validate_module_version () {
 }
 
 clean_module_dir () {
-  dir=$1
+  local dir=$1
   if [ -d "$dir" ]
   then
     echo "Deleting folder $dir"
@@ -26,7 +26,7 @@ clean_module_dir () {
 }
 
 get_project_name () {
-  account="def-coulomb" # Defaults to def-coulomb
+  local account="def-robertf" # Defaults to def-robertf
   if [ -d "$HOME"/projects ]
   then
     script=$(dirname $(readlink -f "$PWD"))
@@ -58,7 +58,7 @@ write_python_shebang_wrapper () {
   {
     echo "#!/bin/bash"
     echo "python=$python"
-    echo "exec \$python \$@"
+    echo "exec \"\$python\" \"\$@\""
   } >> "$wrapper"
   chmod 755 "$wrapper"
 }
