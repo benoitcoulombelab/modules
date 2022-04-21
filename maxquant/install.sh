@@ -29,9 +29,14 @@ fi
 clean_module_dir "$MAXQUANT"
 echo "Installing MaxQuant in folder $MAXQUANT"
 cd "$MAXQUANT" || { echo "Folder $MAXQUANT does not exists"; exit 1; }
-FILENAME=MaxQuant-"$MAXQUANT_VERSION".zip
-wget -nv --no-check-certificate https://datahub-490-pl6.p.genap.ca/apps/maxquant/"$FILENAME"
-unzip "$FILENAME"
+filename=MaxQuant-"$MAXQUANT_VERSION".zip
+wget -nv --no-check-certificate https://datahub-490-pl6.p.genap.ca/apps/maxquant/"$filename"
+unzip "$filename"
 mv MaxQuant/* .
 rmdir MaxQuant
-rm "$FILENAME"
+rm "$filename"
+singularity=maxquant-"$MAXQUANT_VERSION".sif
+if ! wget -nv --no-check-certificate https://datahub-490-pl6.p.genap.ca/apps/maxquant/"$singularity"
+then
+  echo "MaxQuant singularity container does not exists for MaxQuant version $version"
+fi
