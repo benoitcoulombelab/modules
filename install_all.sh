@@ -34,4 +34,9 @@ if [ -n "$SLURM_CPUS_PER_TASK" ]
 then
   threads="$SLURM_CPUS_PER_TASK"
 fi
-parallel -P "$threads" --env install_module install_module ::: "$modules"
+if parallel -P "$threads" --env install_module install_module ::: "$modules"
+then
+  echo "Installed all modules successfully"
+else
+  echo "Failed to install some modules"
+fi
