@@ -32,8 +32,6 @@ cd "$MAXQUANT" || { echo "Folder $MAXQUANT does not exists"; exit 1; }
 filename=MaxQuant-"$MAXQUANT_VERSION".zip
 wget -nv --no-check-certificate https://datahub-490-pl6.p.genap.ca/apps/maxquant/"$filename"
 unzip "$filename"
-mv MaxQuant/* .
-rmdir MaxQuant
 rm "$filename"
 singularity=maxquant-"$MAXQUANT_VERSION".sif
 if ! wget -nv --no-check-certificate https://datahub-490-pl6.p.genap.ca/apps/maxquant/"$singularity"

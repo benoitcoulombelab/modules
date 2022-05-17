@@ -30,7 +30,7 @@ From: mono:6.12.0.122
 # Install MaxQuant
   cd /opt &&\
       curl -k -s -S -o MaxQuant-${MAXQUANT_VERSION}.zip "${DOWNLOAD_URL_BASE}/MaxQuant-${MAXQUANT_VERSION}.zip" &&\
-      unzip MaxQuant-${MAXQUANT_VERSION}.zip &&\
+      unzip MaxQuant-${MAXQUANT_VERSION}.zip -d MaxQuant &&\
       rm MaxQuant-${MAXQUANT_VERSION}.zip
 
 %runscript
