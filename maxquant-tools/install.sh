@@ -32,7 +32,7 @@ cd "$MAXQUANT_TOOLS" || { echo "Folder $MAXQUANT_TOOLS does not exists"; exit 1;
 git clone https://github.com/benoitcoulombelab/maxquant-tools.git .
 if [ "$MAXQUANT_TOOLS_VERSION" == "1.0" ]
 then
-  git checkout master
+  git checkout main
 else
   git checkout "$MAXQUANT_TOOLS_VERSION"
 fi
