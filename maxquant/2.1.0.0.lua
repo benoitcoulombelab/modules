@@ -7,6 +7,7 @@ This module sets the following environment variables:
 
 This module loads the following modules and their requirements:
     - mono/6.12.0.122
+    - singularity/3.8
     - maxquant-tools/1.0
 ]])
 
@@ -17,6 +18,7 @@ whatis("Description: MaxQuant is a quantitative proteomics software package desi
 
 prereq("StdEnv/2020")
 depends_on("mono/6.12.0.122")
+depends_on("singularity/3.8")
 depends_on("python/3.8.10")
 depends_on("maxquant-tools/1.0")
 
