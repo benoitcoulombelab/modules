@@ -15,22 +15,6 @@ then
   exit 0
 fi
 
-# Remove direct configuration of coulombe lab modules, if present.
-if grep -Fq "COULOMB_MODULES_DIR=" ~/.bash_profile
-then
-  echo "Removing Coulombe Lab modules from .bash_profile"
-  INDEX=$(grep -n "COULOMB_MODULES_DIR=" ~/.bash_profile | cut -d: -f1)
-  sed -i "$((INDEX-1)),$((INDEX+4))d" ~/.bash_profile
-fi
-
-# Remove reference to renamed .coulomb_addons configuration, if present.
-if grep -Fq "source .coulomb_addons" ~/.bash_profile
-then
-  echo "Removing file .coulomb_addons from .bash_profile"
-  INDEX=$(grep -n "source .coulomb_addons" ~/.bash_profile | cut -d: -f1)
-  sed -i "$((INDEX-1)),$((INDEX+2))d" ~/.bash_profile
-fi
-
 # Source .coulombelab-apps-addons file on login.
 if ! grep -Fq "source .coulombelab-apps-addons" ~/.bash_profile
 then
