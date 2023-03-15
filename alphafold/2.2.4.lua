@@ -1,6 +1,6 @@
 help([[
 For detailed instructions, go to:
-    https://github.com/dialvarezs/alphafold
+    https://github.com/prehensilecode/alphafold_singularity
     or
     https://github.com/deepmind/alphafold
 ]])
