@@ -62,3 +62,26 @@ write_python_shebang_wrapper () {
   } >> "$wrapper"
   chmod 755 "$wrapper"
 }
+
+create_temporary_directory () {
+  local dir=$1
+  if [ -d "$dir" ]
+  then
+    # the temp directory used, within $dir
+    # omit the -p parameter to create a temporal directory in the default location
+    local temp_dir=$(mktemp -d -p "$dir")
+  else
+    local temp_dir=$(mktemp -d)
+  fi
+  # check if tmp dir was created
+  if [[ ! "$temp_dir" || ! -d "$temp_dir" ]]; then
+    >&2 echo "Could not create temp dir"
+    exit 1
+  fi
+  echo "$temp_dir"
+}
+
+delete_temporary_directory () {
+  local temp_dir=$1
+  rm -rf "$temp_dir"
+}
