@@ -1,1 +1,1 @@
-module_version("alphafold/2.2.4", "default")
+module_version("alphafold/2.3.1", "default")
