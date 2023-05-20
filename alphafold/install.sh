@@ -27,8 +27,22 @@ clean_module_dir "$ALPHAFOLD"
 echo "Installing alphafold in folder $ALPHAFOLD"
 cd "$ALPHAFOLD" || { echo "Folder $ALPHAFOLD does not exists"; exit 1; }
 git clone https://github.com/dialvarezs/alphafold.git .
+patch="${script_path}/alphafold-${version}.patch"
 git checkout "v${ALPHAFOLD_VERSION}"
+if [ -f "${patch}" ]
+then
+  echo "Applying patch file ${patch}"
+  git apply "${patch}"
+fi
 git clone --branch "v${ALPHAFOLD_VERSION}" https://github.com/prehensilecode/alphafold_singularity singularity
+pushd singularity
+patch="${script_path}/alphafold_singularity-${version}.patch"
+if [ -f "${patch}" ]
+then
+  echo "Applying patch file ${patch}"
+  git apply "${patch}"
+fi
+popd
 
 # Create python virtual environment.
 venv="$ALPHAFOLD"/venv
