@@ -33,8 +33,8 @@ then
   git apply "${patch}"
 fi
 echo "Installing python requirements"
-python3 -m venv singularity-venv
-source singularity-venv/bin/activate
+python3 -m venv apptainer-venv
+source apptainer-venv/bin/activate
 git clone -b "v${version}" https://github.com/prehensilecode/alphafold_singularity.git singularity
 pushd singularity
 patch="${current_dir}/alphafold_singularity-${version}.patch"
@@ -45,5 +45,5 @@ then
 fi
 popd
 python3 -m pip install -r singularity/requirements.txt
-echo "Creating singularity image"
-singularity build "${current_dir}/${container}" singularity/Singularity.def
+echo "Creating apptainer image"
+apptainer build "${current_dir}/${container}" singularity/Singularity.def

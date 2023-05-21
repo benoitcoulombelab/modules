@@ -9,7 +9,7 @@ whatis("Version: 2.2.4")
 whatis("URL: https://github.com/deepmind/alphafold")
 whatis("Description: Highly accurate protein structure prediction.")
 
-prereq(atleast("singularity","3.8"))
+prereq(atleast("apptainer","1.1"))
 
 local module_path = myFileName()
 local module_name = myModuleFullName()

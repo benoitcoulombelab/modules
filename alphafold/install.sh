@@ -17,9 +17,9 @@ validate_module_version "$version" alphafold
 module purge
 if [ -z "$version" ]
 then
-  module load StdEnv/2020 python/3.9.6 singularity/3.8 alphafold
+  module load StdEnv/2020 python/3.9.6 apptainer/1.1 alphafold
 else
-  module load StdEnv/2020 python/3.9.6 singularity/3.8 alphafold/"$version"
+  module load StdEnv/2020 python/3.9.6 apptainer/1.1 alphafold/"$version"
 fi
 version="${ALPHAFOLD_VERSION}"
 
@@ -53,8 +53,8 @@ python3 -m venv "$venv"
 #rm requirements-temp.txt
 "$venv/bin/pip" install -r singularity/requirements.txt
 
-# Install singularity container
+# Install apptainer container
 if ! wget -nv -O alphafold.sif "https://datahub-490-pl6.p.genap.ca/apps/alphafold/alphafold-${version}.sif"
 then
-  echo "AlphaFold singularity container does not exists for AlphaFold version $version"
+  echo "AlphaFold apptainer container does not exists for AlphaFold version $version"
 fi
