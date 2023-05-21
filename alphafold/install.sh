@@ -56,5 +56,5 @@ python3 -m venv "$venv"
 # Install singularity container
 if ! wget -nv -O alphafold.sif "https://datahub-490-pl6.p.genap.ca/apps/alphafold/alphafold-${version}.sif"
 then
-  echo "AlphaFold singularity container does not exists for MaxQuant version $version"
+  echo "AlphaFold singularity container does not exists for AlphaFold version $version"
 fi
