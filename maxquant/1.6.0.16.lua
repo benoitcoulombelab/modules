@@ -6,8 +6,8 @@ This module sets the following environment variables:
     MAXQUANT: directory containing MaxQuant programs and bash scripts
 
 This module loads the following modules and their requirements:
-    - mono/5.16.0.179
-    - singularity/3.8
+    - mono/6.12.0.122
+    - apptainer/1.1
     - maxquant-tools/1.0
 ]])
 
@@ -16,11 +16,9 @@ whatis("Keywords: MaxQuant, Utility")
 whatis("URL: https://maxquant.net")
 whatis("Description: MaxQuant is a quantitative proteomics software package designed for analyzing large mass-spectrometric data sets.")
 
-prereq("StdEnv/2018.3")
-depends_on("gcc/7.3.0")
-depends_on("mono/5.16.0.179")
-depends_on("singularity/3.8")
-depends_on("python/3.7.4")
+prereq("StdEnv/2020")
+depends_on("mono/6.12.0.122")
+depends_on("apptainer/1.1")
 depends_on("maxquant-tools/1.0")
 
 local module_path = myFileName()

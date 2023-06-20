@@ -18,9 +18,6 @@ module purge
 if [ -z "$version" ]
 then
   module load StdEnv/2020 maxquant
-elif [[ $version =~ ^1\..* ]]
-then
-  module load StdEnv/2018.3 maxquant/"$version"
 else
   module load StdEnv/2020 maxquant/"$version"
 fi
