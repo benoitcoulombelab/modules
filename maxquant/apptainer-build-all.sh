@@ -10,14 +10,14 @@ create_container () {
   local module_dir=$(dirname "$module".lua)
   local version=$(basename "$module")
   local output
-  output=$(bash "$module_dir/singularity-build.sh" "$version" 2>&1)
+  output=$(bash "$module_dir/apptainer-build.sh" "$version" 2>&1)
   local status=$?
   if [ $status -eq 0 ]
   then
-    printf "Created Singularity container for MaxQuant version %s\n%s\n\n\n\n" "$version" "$output"
+    printf "Created Apptainer container for MaxQuant version %s\n%s\n\n\n\n" "$version" "$output"
     true
   else
-    printf "Failed to create Singularity container for MaxQuant version %s\n%s\n\n\n\n" "$version" "$output"
+    printf "Failed to create Apptainer container for MaxQuant version %s\n%s\n\n\n\n" "$version" "$output"
     false
   fi
 }

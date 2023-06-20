@@ -23,7 +23,7 @@ echo "version: $version"
 rm -f "maxquant-$version.def"
 sed "s/^  MAXQUANT_VERSION=.*$/  MAXQUANT_VERSION=$version/g" "$script_dir/maxquant.def" > "maxquant-$version.def"
 
-echo "Creating Singularity container for MaxQuant $version"
-singularity build --force "maxquant-$version.sif" "maxquant-$version.def"
+echo "Creating Apptainer container for MaxQuant $version"
+apptainer build --force "maxquant-$version.sif" "maxquant-$version.def"
 
 rm "maxquant-$version.def"
