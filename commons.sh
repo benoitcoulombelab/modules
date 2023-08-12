@@ -45,7 +45,8 @@ get_project_name () {
 fix_python_shebang () {
   local dir=$1
   local wrapper=$2
-  find "$dir" -type f -executable -not -name "$wrapper" -exec sed -i "1 s|^#\!.*$|#!/usr/bin/env $wrapper|g" {} \;
+  find "$dir" -type f -executable -not -name "$wrapper" -not -name "*.sh" \
+       -exec sed -i "1 s|^#\!.*$|#!/usr/bin/env $wrapper|g" {} \;
 }
 
 write_python_shebang_wrapper () {

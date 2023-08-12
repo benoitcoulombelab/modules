@@ -1,8 +1,8 @@
 diff --git a/run_alphafold.py b/run_alphafold.py
-index 0d89bfb..1dce38c 100644
+index 1457f3b..1f7ef69 100644
 --- a/run_alphafold.py
 +++ b/run_alphafold.py
-@@ -107,6 +107,8 @@ flags.DEFINE_enum('model_preset', 'monomer',
+@@ -98,6 +98,8 @@ flags.DEFINE_enum('model_preset', 'monomer',
                    'Choose preset model configuration - the monomer model, '
                    'the monomer model with extra ensembling, monomer model with '
                    'pTM head, or multimer model')
@@ -11,7 +11,7 @@ index 0d89bfb..1dce38c 100644
  flags.DEFINE_boolean('benchmark', False, 'Run multiple JAX model evaluations '
                       'to obtain a timing that excludes the compilation time, '
                       'which should be more indicative of the time required for '
-@@ -203,6 +205,9 @@ def predict_structure(
+@@ -179,6 +181,9 @@ def predict_structure(
    with open(features_output_path, 'wb') as f:
      pickle.dump(feature_dict, f, protocol=4)
  
@@ -19,5 +19,5 @@ index 0d89bfb..1dce38c 100644
 +    return
 +
    unrelaxed_pdbs = {}
-   unrelaxed_proteins = {}
    relaxed_pdbs = {}
+   ranking_confidences = {}
