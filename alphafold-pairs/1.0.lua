@@ -1,9 +1,5 @@
 help([[
-For detailed instructions, go to:
-    https://github.com/benoitcoulombelab/alphafold-pairs
-
-This module sets the following environment variables:
-    ALPHAFOLD_PAIRS:  directory containing alphafold-pairs
+This module was renamed to 'pairs' and will be removed from the system on January 19 2024.
 ]])
 
 whatis("Version: 1.0")
@@ -18,3 +14,4 @@ local home = pathJoin(apps_base, module_name)
 prepend_path("PATH", pathJoin(home, "venv/bin"))
 setenv("ALPHAFOLD_PAIRS", home)
 setenv("ALPHAFOLD_PAIRS_VERSION", myModuleVersion())
+LmodMessage("This module was renamed to 'pairs' and will be removed from the system on January 19 2024.\n")
