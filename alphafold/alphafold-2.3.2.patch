@@ -1,23 +1,79 @@
 diff --git a/run_alphafold.py b/run_alphafold.py
-index 0d89bfb..1dce38c 100644
+index 0d89bfb..fb36746 100644
 --- a/run_alphafold.py
 +++ b/run_alphafold.py
-@@ -107,6 +107,8 @@ flags.DEFINE_enum('model_preset', 'monomer',
+@@ -107,6 +107,10 @@ flags.DEFINE_enum('model_preset', 'monomer',
                    'Choose preset model configuration - the monomer model, '
                    'the monomer model with extra ensembling, monomer model with '
                    'pTM head, or multimer model')
 +flags.DEFINE_boolean('prepare', False, 'Run prepare feature dictionary step only '
 +                     '(does not require GPU)')
++flags.DEFINE_boolean('use_checkpoints', False, 'Save models processing state after '
++                     'each model is processed and load state if AlphaFold is restarted')
  flags.DEFINE_boolean('benchmark', False, 'Run multiple JAX model evaluations '
                       'to obtain a timing that excludes the compilation time, '
                       'which should be more indicative of the time required for '
-@@ -203,6 +205,9 @@ def predict_structure(
+@@ -203,16 +207,44 @@ def predict_structure(
    with open(features_output_path, 'wb') as f:
      pickle.dump(feature_dict, f, protocol=4)
  
 +  if FLAGS.prepare:
++    logging.info("Flag 'prepare' is active and prepare step completed, exiting...")
 +    return
++
++  logging.info('Start running models')
 +
    unrelaxed_pdbs = {}
    unrelaxed_proteins = {}
    relaxed_pdbs = {}
+   relax_metrics = {}
+   ranking_confidences = {}
+ 
++  if FLAGS.use_checkpoints:
++    checkpoint_timings_path = os.path.join(output_dir, 'checkpoint_timings.pkl')
++    checkpoint_ranking_confidences_path = os.path.join(output_dir, 'checkpoint_ranking_confidences.pkl')
++    checkpoint_unrelaxed_proteins_path = os.path.join(output_dir, 'checkpoint_unrelaxed_proteins.pkl')
++    checkpoint_unrelaxed_pdbs_path = os.path.join(output_dir, 'checkpoint_unrelaxed_pdbs.pkl')
++    if os.path.isfile(checkpoint_timings_path) and os.path.isfile(checkpoint_ranking_confidences_path) and \
++            os.path.isfile(checkpoint_unrelaxed_proteins_path) and os.path.isfile(checkpoint_unrelaxed_pdbs_path):
++      logging.info('Loading saved checkpoint')
++      with open(checkpoint_timings_path, 'rb') as f:
++        timings = pickle.load(f)
++      with open(checkpoint_ranking_confidences_path, 'rb') as f:
++        ranking_confidences = pickle.load(f)
++      with open(checkpoint_unrelaxed_proteins_path, 'rb') as f:
++        unrelaxed_proteins = pickle.load(f)
++      with open(checkpoint_unrelaxed_pdbs_path, 'rb') as f:
++        unrelaxed_pdbs = pickle.load(f)
++
+   # Run the models.
+   num_models = len(model_runners)
+   for model_index, (model_name, model_runner) in enumerate(
+       model_runners.items()):
++    if FLAGS.use_checkpoints and model_name in ranking_confidences and model_name in unrelaxed_proteins \
++            and model_name in unrelaxed_pdbs:
++      # Model already processed
++      logging.info('Model %s on %s loaded from saved checkpoint', model_name, fasta_name)
++      continue
+     logging.info('Running model %s on %s', model_name, fasta_name)
+     t_0 = time.time()
+     model_random_seed = model_index + random_seed * num_models
+@@ -266,6 +298,18 @@ def predict_structure(
+     with open(unrelaxed_pdb_path, 'w') as f:
+       f.write(unrelaxed_pdbs[model_name])
+ 
++    if FLAGS.use_checkpoints:
++      with open(checkpoint_timings_path, 'wb') as f:
++        pickle.dump(timings, f, protocol=4)
++      with open(checkpoint_ranking_confidences_path, 'wb') as f:
++        pickle.dump(ranking_confidences, f, protocol=4)
++      with open(checkpoint_unrelaxed_proteins_path, 'wb') as f:
++        pickle.dump(unrelaxed_proteins, f, protocol=4)
++      with open(checkpoint_unrelaxed_pdbs_path, 'wb') as f:
++        pickle.dump(unrelaxed_pdbs, f, protocol=4)
++      logging.info('Saved state after running model %s on %s', model_name, fasta_name)
++
++
+   # Rank by model confidence.
+   ranked_order = [
+       model_name for model_name, confidence in
