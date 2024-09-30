@@ -30,7 +30,7 @@ From: mcr.microsoft.com/dotnet/sdk:8.0
       rm MaxQuant-${MAXQUANT_VERSION}.zip
 
 %runscript
-  echo "Running MaxQuant with command: mono $MAXQUANT_SINGULARITY/bin/MaxQuantCmd.exe $*"
+  echo "Running MaxQuant with command: dotnet $MAXQUANT_SINGULARITY/bin/MaxQuantCmd.dll $*"
   exec dotnet $MAXQUANT_SINGULARITY/bin/MaxQuantCmd.dll "$@"
 
 %labels
