@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: mcr.microsoft.com/dotnet/sdk:8.0
+From: mono:6.12.0.122
 
 %environment
   export MAXQUANT_SINGULARITY=/opt/MaxQuant
@@ -7,19 +7,22 @@ From: mcr.microsoft.com/dotnet/sdk:8.0
 
 %post
   DOWNLOAD_URL_BASE=https://datahub-490-pl6.p.genap.ca/apps/maxquant
-  MAXQUANT_VERSION=2.6.0.0
+  MAXQUANT_VERSION=2.0.1.0
   export DOTNET_CLI_TELEMETRY_OPTOUT=1
 # Install requirements
   apt-get update && \
   apt-get install -y gnupg ca-certificates curl wget unzip xauth x11-apps libgtk2.0-0 xmlstarlet
 # Install dotnet
-#  wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb &&\
-#      dpkg -i packages-microsoft-prod.deb &&\
-#      rm packages-microsoft-prod.deb
-#  apt-get update &&\
-#      apt-get install -y apt-transport-https && \
-#      apt-get update && \
-#      apt-get install -y dotnet-sdk-8.0
+  wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb &&\
+      dpkg -i packages-microsoft-prod.deb &&\
+      rm packages-microsoft-prod.deb
+  apt-get update &&\
+      apt-get install -y apt-transport-https && \
+      apt-get update && \
+      apt-get install -y dotnet-sdk-2.1 &&\
+      apt-get install -y dotnet-runtime-2.1 &&\
+      apt-get install -y dotnet-sdk-3.1 &&\
+      apt-get install -y dotnet-runtime-3.1
 # Create bind points for Compute Canada
   mkdir /scratch
   mkdir /localscratch
@@ -31,7 +34,7 @@ From: mcr.microsoft.com/dotnet/sdk:8.0
 
 %runscript
   echo "Running MaxQuant with command: mono $MAXQUANT_SINGULARITY/bin/MaxQuantCmd.exe $*"
-  exec dotnet $MAXQUANT_SINGULARITY/bin/MaxQuantCmd.dll "$@"
+  exec mono $MAXQUANT_SINGULARITY/bin/MaxQuantCmd.exe "$@"
 
 %labels
   Author Christian Poitras, IRCM based on Docker container by Raoul Jean Pierre Bonnal, IFOM

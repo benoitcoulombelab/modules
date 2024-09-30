@@ -16,12 +16,18 @@ set -e
 
 script_dir=$(dirname $(readlink -f "$0"))
 version=$1
+maxquant_def="maxquant.def"
+if [ "$version" \< "2.5" ]
+then
+  maxquant_def="maxquant-2.4.def"
+fi
 
 echo "script dir: $script_dir"
 echo "version: $version"
+echo "source maxquant.def file: $maxquant_def"
 
 rm -f "maxquant-$version.def"
-sed "s/^  MAXQUANT_VERSION=.*$/  MAXQUANT_VERSION=$version/g" "$script_dir/maxquant.def" > "maxquant-$version.def"
+sed "s/^  MAXQUANT_VERSION=.*$/  MAXQUANT_VERSION=$version/g" "$script_dir/$maxquant_def" > "maxquant-$version.def"
 
 echo "Creating Apptainer container for MaxQuant $version"
 apptainer build --force "maxquant-$version.sif" "maxquant-$version.def"
