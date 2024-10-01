@@ -11,7 +11,7 @@ This module loads the following modules and their requirements:
     - maxquant-tools/1.0
 ]])
 
-whatis("Version: 2.6.4.0")
+whatis("Version: 2.6.5.0")
 whatis("Keywords: MaxQuant, Utility")
 whatis("URL: https://maxquant.net")
 whatis("Description: MaxQuant is a quantitative proteomics software package designed for analyzing large mass-spectrometric data sets.")
